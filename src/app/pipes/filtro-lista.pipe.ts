@@ -15,10 +15,9 @@ export class FiltroListaPipe implements PipeTransform {
     switch (tipo) {
       case "por hacer":
        // Mostrar listas que no están completadas y que tienen al menos una actividad sin completar
-       return listas.filter(lista =>
-        !lista.completada && lista.item.some(actividad => !actividad.completado)
-      );
+       return listas.filter((itemLista)=> itemLista.completada == false && itemLista.item.filter((itemActividad)=> itemActividad.completado == true).length == 0);
 
+       
       case "haciendo":
         // Listas que no están completadas y tienen al menos una actividad completada
         return listas.filter(lista =>
@@ -36,3 +35,4 @@ export class FiltroListaPipe implements PipeTransform {
      
   
 }
+
