@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FiltroListaPipe } from './filtro-lista.pipe'; // Asegúrate de que la ruta sea correcta
+import { FiltroListaPipe } from './filtro-lista.pipe';
+
+
 
 @NgModule({
-  declarations: [FiltroListaPipe], // Declara el pipe aquí
+  declarations: [FiltroListaPipe],
   imports: [
     CommonModule
   ],
-  exports: [FiltroListaPipe] // Y expórtalo aquí
+  exports:[FiltroListaPipe]
 })
 export class PipeModule { }

@@ -3,27 +3,36 @@ import { Lista } from '../models/lista.model';
 
 @Pipe({
   name: 'filtroLista',
-  pure:false
+  pure: false
 })
+
 export class FiltroListaPipe implements PipeTransform {
+  transform(listas: Lista[], tipo: string) : Lista [] {
+    if(!listas || !tipo){
+      return listas;
+    }
+    
+    switch (tipo) {
+      case "por hacer":
+       // Mostrar listas que no están completadas y que tienen al menos una actividad sin completar
+       return listas.filter(lista =>
+        !lista.completada && lista.item.some(actividad => !actividad.completado)
+      );
 
-  transform(listas:Lista[],tipo:string) {
+      case "haciendo":
+        // Listas que no están completadas y tienen al menos una actividad completada
+        return listas.filter(lista =>
+          !lista.completada && lista.item.some(actividad => actividad.completado)
+        );
 
-    let lista:any[] = [];
+      case "terminado":
+        // Listas que están completadas
+        return listas.filter(lista => lista.completada);
 
-    switch(tipo){
-      case 'por hacer':
-        lista = listas.filter((itemLista)=> itemLista.completada == false && itemLista.item.filter((itemActividad)=>
-          itemActividad.completado == true).length == 0);
-        break;
-        case " haciendo":
-          lista=listas.filter((itemLista)=> itemLista.completada == true );
-          break;
-
-        case "terminado":
-          lista=lista.filter((itemLista)=> itemLista.completada == true)
-          break;
-}
-  return lista;
+      default:
+        return listas;
+    }
   }
+     
+  
 }
